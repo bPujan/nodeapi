@@ -1,27 +1,33 @@
-import express from "express"; //ECMA Script
+import express from 'express';
+import 'babel-polyfill';
+import cors from 'cors';
+import env from './env';
+import usersRoute from './app/routes/usersRoute';
+// import seedRoute from './app/routes/seedRoute';
+// import adminRoute from './app/routes/adminRoute';
+// import tripRoute from './app/routes/tripRoute';
+// import busRoute from './app/routes/busRoute';
+// import bookingRoute from './app/routes/bookingRoute';
+
 const app = express();
 
-var response={name:"Pujan"};
-response.address="Kathmandu";
+// Add middleware for parsing URL encoded bodies (which are usually sent by browser)
+app.use(cors());
+// Add middleware for parsing JSON and urlencoded data and populating `req.body`
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
-//app.use(express.static(path.join(__dirname,"public")));
-
-const examp=require("./example");
-
-
-app.use(mware);
-*/
-
-
-app.get("/",(req,res)=>{
-    res.sendFile((path.join(__dirname,"public","abc.html")))});
-app.get("/user",(req,res)=>{
-    //res.send("Hello World") 
-    res.sendFile((path.join(__dirname,"public","xyz.html")))});
+app.use('/api/v1', usersRoute);
+// app.use('/api/v1', seedRoute);
+// app.use('/api/v1', adminRoute);
+// app.use('/api/v1', tripRoute);
+// app.use('/api/v1', busRoute);
+// app.use('/api/v1', bookingRoute);
 
 
-    })*/
-/*app.get("/",function (req, res){
-    res.send("hello world")
+app.listen(env.port).on('listening', () => {
+  console.log(`🚀 are live on ${env.port}`);
 });
 
+
+export default app;
